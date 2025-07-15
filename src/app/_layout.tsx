@@ -1,3 +1,5 @@
+import { useColorScheme } from '@/src/hooks/useColorScheme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DarkTheme,
   DefaultTheme,
@@ -6,15 +8,15 @@ import {
 import { useFonts } from 'expo-font';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/src/hooks/useColorScheme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import 'react-native-reanimated';
+import '../../global.css';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(true);
   const [loaded] = useFonts({
     SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -35,10 +37,19 @@ export default function RootLayout() {
       }
     };
     checkFirstTime();
-  }, [isFirstLaunch, router]);
+    setIsLoading(false);
+  }, [router]);
 
   if (!loaded || isFirstLaunch === null) {
     return null;
+  }
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading</Text>
+      </View>
+    );
   }
 
   return (
@@ -50,10 +61,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="onboarding"
-          options={{ headerShown: false, presentation: 'modal' }}
-        />
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
