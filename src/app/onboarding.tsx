@@ -24,30 +24,40 @@ const { width, height } = Dimensions.get('window');
 const onboardingSlides: OnboardingSlide[] = [
   {
     id: '1',
-    title: 'Customize your own fast menu',
-    description: 'Put your own menu at the front page for faster access',
-    image: require('../../assets/images/splash-icon.png'),
-    backgroundColor: '#f8f9fa',
+    title: 'Never Miss a Dose Again',
+    description:
+      'Get timely reminders for all your medications so you can stay consistent with your health routine.',
+    image: require('../../assets/images/onboard/onboard-1.png'),
+    backgroundColor: '#FFE2E2',
   },
   {
     id: '2',
-    title: 'Set your goal with financial record',
-    description: 'Automatically record your finance in an instant',
-    image: require('../../assets/images/splash-icon.png'),
-    backgroundColor: '#f8f9fa',
+    title: 'Track and Organize Your Medications',
+    description:
+      'Add your pills, set schedules, and manage everything in one easy-to-use place.',
+    image: require('../../assets/images/onboard/onboard-2.png'),
+    backgroundColor: '#B9F8CF',
   },
   {
     id: '3',
-    title: 'Find local banks and ATMs around you',
-    description: 'Find the closest banks and ATMs around you',
-    image: require('../../assets/images/splash-icon.png'),
-    backgroundColor: '#f8f9fa',
+    title: 'Refill Reminders Made Easy',
+    description:
+      'Get notified when it’s time to refill your medications — never run out again.',
+    image: require('../../assets/images/onboard/onboard-4.png'),
+    backgroundColor: '#DFF2FE',
+  },
+  {
+    id: '4',
+    title: 'Customize Your Reminder Times',
+    description:
+      'Set reminders exactly when you need them — morning, afternoon, or night.',
+    image: require('../../assets/images/onboard/onboard-3.png'),
+    backgroundColor: '#FCCEE8',
   },
 ];
 
 export default function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  // const flatListRef = useRef<FlatList<OnboardingSlide>>(null);
   const router = useRouter();
 
   const handleSkip = async () => {
@@ -62,10 +72,10 @@ export default function Onboarding() {
   const handleNext = (): void => {
     if (currentIndex < onboardingSlides.length - 1) {
       const nextIndex = currentIndex + 1;
-      // flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+
       setCurrentIndex(nextIndex);
     } else {
-      handleSkip(); // Last page → get started
+      handleSkip();
     }
   };
 
@@ -77,7 +87,7 @@ export default function Onboarding() {
             style={[
               styles.dot,
               {
-                backgroundColor: index === currentIndex ? '#007AFF' : '#E0E0E0',
+                backgroundColor: index === currentIndex ? '#fb2c36' : '#E0E0E0',
                 width: index === currentIndex ? 50 : 50,
               },
             ]}
@@ -92,19 +102,19 @@ export default function Onboarding() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: item?.backgroundColor }]}
+    >
       {/* Skip Button */}
       {currentIndex < onboardingSlides.length - 1 && (
         <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
-          <Text style={styles.skipText}>Skip</Text>
+          <Text className="text-md text-secondary-600">Skip</Text>
         </TouchableOpacity>
       )}
 
       {/* Slides */}
       {item && (
-        <View
-          style={[styles.slide, { backgroundColor: item?.backgroundColor }]}
-        >
+        <View style={[styles.slide]}>
           <View style={styles.imageContainer}>
             <Image
               source={item?.image}
@@ -130,14 +140,17 @@ export default function Onboarding() {
         <View style={styles.buttonContainer}>
           {currentIndex === onboardingSlides.length - 1 ? (
             <TouchableOpacity
-              style={styles.getStartedButton}
+              className="bg-primary-400 px-20 py-6 rounded"
               onPress={handleNext}
             >
-              <Text style={styles.getStartedText}>Get Started</Text>
+              <Text className="text-white font-semibold">Get Started</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-              <Text style={styles.nextText}>Next</Text>
+            <TouchableOpacity
+              className="bg-primary-400 px-28 py-6 rounded"
+              onPress={handleNext}
+            >
+              <Text className="text-white font-semibold">Next</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -158,11 +171,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingHorizontal: 16,
     paddingVertical: 8,
-  },
-  skipText: {
-    fontSize: 16,
-    color: '#666666',
-    fontWeight: '500',
   },
   slide: {
     width,
