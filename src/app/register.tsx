@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Icon from '@react-native-vector-icons/fontawesome';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
@@ -11,9 +12,11 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Login() {
-  const [email, setEmail] = useState('');
+export default function Register() {
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
 
   return (
     <SafeAreaProvider>
@@ -24,12 +27,22 @@ export default function Login() {
             className="bg-white rounded-xl p-6 shadow-md"
           >
             <Text className="text-center text-3xl font-bold mb-2">
-              Login your account
+              Register an account
             </Text>
             <Text className="text-center text-sm text-gray-600 mb-6">
-              Already have an account? Log in
+              If you're new here? register
             </Text>
 
+            <View className="mb-4">
+              <Text className="text-base font-medium mb-1">Name</Text>
+              <TextInput
+                value={name}
+                onChangeText={setName}
+                placeholder="Type your name"
+                className="border border-gray-300 rounded px-4 py-2"
+                keyboardType="default"
+              />
+            </View>
             <View className="mb-4">
               <Text className="text-base font-medium mb-1">Email</Text>
               <TextInput
@@ -52,17 +65,29 @@ export default function Login() {
                 secureTextEntry
               />
             </View>
+            <View className="mb-6">
+              <Text className="text-base font-medium mb-1">
+                Confirm Password
+              </Text>
+              <TextInput
+                value={confirmPass}
+                onChangeText={setConfirmPass}
+                placeholder="re-type your password"
+                className="border border-gray-300 rounded px-4 py-2"
+                secureTextEntry
+              />
+            </View>
 
             <TouchableOpacity className="bg-primary-600 py-3 rounded-full mb-4">
               <Text className="text-center text-white font-semibold">
-                Login
+                Register
               </Text>
             </TouchableOpacity>
 
             <Text className="text-center text-gray-500 mb-4">
-              If you are new here{' '}
-              <Link href={'/register'} className="underline text-blue-500">
-                register
+              Already have your account?{' '}
+              <Link href={'/login'} className="underline text-blue-500">
+                login
               </Link>
             </Text>
             <Text className="text-center text-gray-500 mb-4">
