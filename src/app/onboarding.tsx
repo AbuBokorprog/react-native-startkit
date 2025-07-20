@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 interface OnboardingSlide {
   id: string;
@@ -63,7 +64,7 @@ export default function Onboarding() {
   const handleSkip = async () => {
     try {
       await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-      router.replace('/');
+      router.replace('/login');
     } catch (error) {
       console.error('Error saving onboarding status:', error);
     }
@@ -102,60 +103,62 @@ export default function Onboarding() {
   );
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: item?.backgroundColor }]}
-    >
-      {/* Skip Button */}
-      {currentIndex < onboardingSlides.length - 1 && (
-        <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
-          <Text className="text-md text-secondary-600">Skip</Text>
-        </TouchableOpacity>
-      )}
+    <SafeAreaProvider>
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: item?.backgroundColor }]}
+      >
+        {/* Skip Button */}
+        {currentIndex < onboardingSlides.length - 1 && (
+          <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
+            <Text className="text-md text-secondary-600">Skip</Text>
+          </TouchableOpacity>
+        )}
 
-      {/* Slides */}
-      {item && (
-        <View style={[styles.slide]}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={item?.image}
-              style={styles?.image}
-              resizeMode="contain"
-            />
+        {/* Slides */}
+        {item && (
+          <View style={[styles.slide]}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={item?.image}
+                style={styles?.image}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={styles.textContainer}>
+              <Text className="text-3xl font-bold text-center">
+                {item?.title}
+              </Text>
+              <Text style={styles.description}>{item?.description}</Text>
+            </View>
           </View>
-          <View style={styles.textContainer}>
-            <Text className="text-3xl font-bold text-center">
-              {item?.title}
-            </Text>
-            <Text style={styles.description}>{item?.description}</Text>
+        )}
+
+        {/* Bottom Section */}
+        <View style={styles.bottomSection}>
+          {/* Dots Indicator */}
+          {renderDots()}
+
+          {/* Navigation Buttons */}
+          <View style={styles.buttonContainer}>
+            {currentIndex === onboardingSlides.length - 1 ? (
+              <TouchableOpacity
+                className="bg-primary-400 px-20 py-6 rounded"
+                onPress={handleNext}
+              >
+                <Text className="text-white font-semibold">Get Started</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                className="bg-primary-400 px-28 py-6 rounded"
+                onPress={handleNext}
+              >
+                <Text className="text-white font-semibold">Next</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
-      )}
-
-      {/* Bottom Section */}
-      <View style={styles.bottomSection}>
-        {/* Dots Indicator */}
-        {renderDots()}
-
-        {/* Navigation Buttons */}
-        <View style={styles.buttonContainer}>
-          {currentIndex === onboardingSlides.length - 1 ? (
-            <TouchableOpacity
-              className="bg-primary-400 px-20 py-6 rounded"
-              onPress={handleNext}
-            >
-              <Text className="text-white font-semibold">Get Started</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              className="bg-primary-400 px-28 py-6 rounded"
-              onPress={handleNext}
-            >
-              <Text className="text-white font-semibold">Next</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
