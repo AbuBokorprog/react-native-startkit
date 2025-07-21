@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "medi-reminder",
-    "slug": "medi-reminder",
+    "name": "start-kit",
+    "slug": "start-kit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo/medi-reminder.png",
-    "scheme": "medireminder",
+    "icon": "./",
+    "scheme": "startKit",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo/medi-reminder.png",
+        "foregroundImage": "./assets/images/react-logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
@@ -21,14 +21,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logo/medi-reminder.png"
+      "favicon": "./assets/images/react-logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo/medi-reminder.png",
+          "image": "./assets/images/react-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
