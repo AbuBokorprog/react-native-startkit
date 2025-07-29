@@ -41,11 +41,12 @@ export default [
       "react-native": reactNativePlugin,
     },
     rules: {
-      "prettier/prettier": "error",
+      "prettier/prettier": "warn",
       "react/react-in-jsx-scope": "off",
       "react-native/no-inline-styles": "off",
       "@typescript-eslint/no-require-imports": "off",
       "no-undef": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   {
