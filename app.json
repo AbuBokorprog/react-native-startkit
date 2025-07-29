@@ -4,7 +4,7 @@
     "slug": "start-kit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./",
+    "icon": "./assets/images/react-logo.png",
     "scheme": "startKit",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
